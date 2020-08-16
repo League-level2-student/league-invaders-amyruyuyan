@@ -1,12 +1,16 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Timer;
 
 import javax.swing.JPanel;
 
-public class GamePanel extends JPanel{ 
+public class GamePanel extends JPanel implements ActionListener{ 
 	Font titleFont; 
 	Font smallerFont;
+	Timer frameDraw;
     final int MENU = 0;
     final int GAME = 1;
     final int END = 2;
@@ -57,6 +61,25 @@ public class GamePanel extends JPanel{
 	public GamePanel() {
 		titleFont = new Font("Arial", Font.PLAIN, 48);
 		smallerFont = new Font("Arial", Font.PLAIN, 24);
+	    frameDraw = new Timer(1000/60,this);
+	    frameDraw.start();
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+		if(currentState == MENU){
+		    updateMenuState();
+		}else if(currentState == GAME){
+		    updateGameState();
+		}else if(currentState == END){
+		    updateEndState();
+		    
+		    System.out.println("action");
+		    
+		}
+		
 	}
 }
 	
