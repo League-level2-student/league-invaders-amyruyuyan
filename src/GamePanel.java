@@ -3,11 +3,14 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Timer;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
-public class GamePanel extends JPanel implements ActionListener{ 
+public class GamePanel extends JPanel implements ActionListener, KeyListener{ 
 	Font titleFont; 
 	Font smallerFont;
 	Timer frameDraw;
@@ -76,9 +79,47 @@ public class GamePanel extends JPanel implements ActionListener{
 		}else if(currentState == END){
 		    updateEndState();
 		    
-		    System.out.println("action");
-		    
 		}
+		System.out.println("action");
+		repaint();
+	}
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+		if (e.getKeyCode()==KeyEvent.VK_ENTER) {
+		    if (currentState == END) {
+		        currentState = MENU;
+		    } else {
+		        currentState++;
+		    }
+		}  
+		
+		if (e.getKeyCode()==KeyEvent.VK_UP) {
+		    System.out.println("UP");
+		}
+		
+		if (e.getKeyCode()==KeyEvent.VK_DOWN) {
+		    System.out.println("UP");
+		}
+
+		if (e.getKeyCode()==KeyEvent.VK_LEFT) {
+		    System.out.println("UP");
+		}
+		
+		if (e.getKeyCode()==KeyEvent.VK_RIGHT) {
+		    System.out.println("UP");
+		}
+
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 }

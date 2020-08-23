@@ -19,12 +19,14 @@ void setup(){
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 	frame.setVisible(true);
 	frame.setSize(WIDTH, HEIGHT);
+	frame.addKeyListener(GP);
 }
 
 public LeagueInvaders(){
 	frame = new JFrame();
 	GP = new GamePanel();
 }
+
 }
 	
 
