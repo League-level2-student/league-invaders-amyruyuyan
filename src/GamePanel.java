@@ -5,8 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 
-
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -20,6 +21,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
     int currentState = MENU;
     Rocketship rocket;
     ObjectManager manager;
+    public static BufferedImage image;
+    public static boolean needImage = true;
+    public static boolean gotImage = false;	
     
     void updateMenuState() {  }
     void updateGameState() {  
@@ -73,6 +77,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	    frameDraw.start();
 	    rocket = new Rocketship(250, 700, 50, 50);
 	    manager = new ObjectManager(rocket);
+	    if (needImage) {
+	        loadImage ("sapce.png");
+	    }
+
 	}
 	
 	@Override
@@ -126,8 +134,20 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		    System.out.println("RIGHT");
 		    rocket.right();
 		}
-
 	}
+	
+	void loadImage(String imageFile) {
+	    if (needImage) {
+	        try {
+	            image = ImageIO.read(this.getClass().getResourceAsStream(imageFile));
+		    gotImage = true;
+	        } catch (Exception e) {
+	            
+	        }
+	        needImage = false;
+	    }
+	}
+	
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
