@@ -15,6 +15,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	Font titleFont; 
 	Font smallerFont;
 	Timer frameDraw;
+	Timer alienSpawn;
     final int MENU = 0;
     final int GAME = 1;
     final int END = 2;
@@ -48,8 +49,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
     	g.drawString("Press SPACE for instructions", 85, 600);
     }
     void drawGameState(Graphics g) { 
-    	g.setColor(Color.BLACK);
-    	g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+    	if (gotImage) {
+    		g.drawImage(image, 0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT, null);
+    	} else {
+    		g.setColor(Color.BLACK);
+        	g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+    	}
     	manager.draw(g);
     }
     void drawEndState(Graphics g)  {   
@@ -78,7 +83,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	    rocket = new Rocketship(250, 700, 50, 50);
 	    manager = new ObjectManager(rocket);
 	    if (needImage) {
-	        loadImage ("sapce.png");
+	        loadImage ("space.png");
 	    }
 
 	}
@@ -91,6 +96,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		    updateMenuState();
 		}else if(currentState == GAME){
 		    updateGameState();
+		    manager.addProjectile(rocket.getProjectile());
 		}else if(currentState == END){
 		    updateEndState();
 		    
@@ -108,8 +114,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		// TODO Auto-generated method stub
 		
 		if (e.getKeyCode()==KeyEvent.VK_ENTER) {
+			startGame();
 		    if (currentState == END) {
 		        currentState = MENU;
+		        alienSpawn.stop();
 		    } else {
 		        currentState++;
 		    }
@@ -146,6 +154,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	        }
 	        needImage = false;
 	    }
+	}
+	
+	void startGame() {
+		alienSpawn = new Timer(1000 , manager);
+	    alienSpawn.start();
 	}
 	
 	@Override
