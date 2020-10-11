@@ -36,6 +36,7 @@ void update() {
 		Alien alien = aliens.get(i);
 		alien.update();
 	}
+	rocket.update();
 }
 
 void draw(Graphics g) {
@@ -47,6 +48,16 @@ void draw(Graphics g) {
 }
 
 void purgeObjects() {	
+}
+
+void checkCollision(){
+	for(int i = 0; i < aliens.size(); i++) {
+		Alien alien1 = aliens.get(i);
+		if (alien1.collisionBox.intersects(rocket.collisionBox)) {
+			alien1.isActive = false;
+			rocket.isActive = false;
+		}
+	}
 }
 
 @Override
