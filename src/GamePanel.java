@@ -19,8 +19,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
     final int MENU = 0;
     final int GAME = 1;
     final int END = 2;
-    int currentState = MENU;
     Rocketship rocket;
+    int currentState = MENU;
     ObjectManager manager;
     public static BufferedImage image;
     public static boolean needImage = true;
@@ -29,8 +29,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
     void updateMenuState() {  }
     void updateGameState() {  
     	manager.update();
+    	if (rocket.isActive == false) {
+    		currentState = END; 
+    	}
     }
-    void updateEndState()  {  }
+    void updateEndState()  {
+    	
+    }
     
     void drawMenuState(Graphics g) { 
     	g.setColor(Color.BLUE);
@@ -96,7 +101,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		    updateMenuState();
 		}else if(currentState == GAME){
 		    updateGameState();
-		    manager.addProjectile(rocket.getProjectile());
 		}else if(currentState == END){
 		    updateEndState();
 		    
@@ -142,8 +146,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		    System.out.println("RIGHT");
 		    rocket.right();
 		}
+		
+		if (e.getKeyCode()==KeyEvent.VK_SPACE) {
+			System.out.println("SPACE");
+			manager.addProjectile(rocket.getProjectile());
+		}
 	}
-	
+
 	void loadImage(String imageFile) {
 	    if (needImage) {
 	        try {
