@@ -10,6 +10,7 @@ Rocketship rocket;
 ArrayList<Projectile> projectiles;
 ArrayList<Alien> aliens;
 Random random;
+private int score = 0;
 
 public ObjectManager(Rocketship rocket) {
 
@@ -21,6 +22,10 @@ public ObjectManager(Rocketship rocket) {
 	this.aliens = new ArrayList<Alien>();
 	
 	this.random = new Random();
+}
+
+int getScore() {
+	return this.score;
 }
 
 void addProjectile(Projectile Projectile) {
@@ -80,14 +85,17 @@ void checkCollision(){
 			if (alien1.collisionBox.intersects(projectiles1.collisionBox)){
 				projectiles1.isActive = false;
 				alien1.isActive = false;
+				score++;
 			}
 		}
 				if (alien1.collisionBox.intersects(rocket.collisionBox)){
 			alien1.isActive = false;
 			rocket.isActive = false;
 		}
+				
 	}
 }
+
 
 @Override
 public void actionPerformed(ActionEvent e) {

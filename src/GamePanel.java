@@ -14,6 +14,7 @@ import javax.swing.Timer;
 public class GamePanel extends JPanel implements ActionListener, KeyListener{ 
 	Font titleFont; 
 	Font smallerFont;
+	Font endFont;
 	Timer frameDraw;
 	Timer alienSpawn;
     final int MENU = 0;
@@ -65,6 +66,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
     void drawEndState(Graphics g)  {   
     	g.setColor(Color.RED);
     	g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+    	g.setFont(endFont);
+    	g.setColor(Color.white);
+    	g.drawString("Your score is " + manager.getScore(), 50, 50);
     }
    
 	@Override
@@ -118,10 +122,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		// TODO Auto-generated method stub
 		
 		if (e.getKeyCode()==KeyEvent.VK_ENTER) {
+			if (currentState==MENU) {
 			startGame();
-		    if (currentState == END) {
+			currentState=GAME;
+			}
+			else if (currentState == END) {
 		        currentState = MENU;
 		        alienSpawn.stop();
+		        rocket = new Rocketship(250, 700, 50, 50);
+			    manager = new ObjectManager(rocket);
 		    } else {
 		        currentState++;
 		    }
